@@ -11,7 +11,7 @@ def get_client_ip():
 
 @app.route("/", methods=["GET"])
 def home():
-    return jsonify({"ok": True, "message": "response received from server"})
+    return jsonify({"message": "response received from server"})
 
 @app.route("/apkonic", methods=["GET"])
 def apkonic():
@@ -24,3 +24,4 @@ def apkonic():
 if __name__ == "__main__":
 
     app.run(host="0.0.0.0",debug=True,port=3000)
+
