@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Features - Apkonic</title>
+
+    <style>
+        body{
+            margin:0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right,#0a1931,#1f3c88);
+            color:white;
+            padding:50px 20px;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:50px;
+        }
+
+        .feature-container{
+            max-width:1100px;
+            margin:auto;
+            display:flex;
+            flex-direction:column;
+            gap:30px;
+        }
+
+        .feature-card{
+            background:white;
+            color:black;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 8px 20px rgba(0,0,0,0.3);
+            transition:0.3s;
+        }
+
+        .feature-card:hover{
+            transform:translateY(-5px);
+        }
+
+        .feature-card h2{
+            margin-bottom:15px;
+            color:#1f3c88;
+        }
+
+        .feature-card p{
+            line-height:1.6;
+            font-size:15px;
+        }
+
+        .back-btn{
+            display:block;
+            width:200px;
+            text-align:center;
+            margin:50px auto 0;
+            padding:12px;
+            background:#00c3ff;
+            color:black;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        .back-btn:hover{
+            background:#00aaff;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Features of Apkonic</h1>
+
+<div class="feature-container">
+
+    <div class="feature-card">
+        <h2>🔐 Advanced APK Malware Detection</h2>
+        <p>
+            Apkonic analyzes uploaded APK files to detect potentially malicious behavior. 
+            The system checks file size, extension validation, and suspicious indicators 
+            to determine whether an application may pose a security threat.
+        </p>
+        <p>
+            This feature helps users avoid installing harmful applications that may steal 
+            personal data, banking credentials, or sensitive information.
+        </p>
+    </div>
+
+    <div class="feature-card">
+        <h2>📱 Smishing (SMS Phishing) Detection</h2>
+        <p>
+            Apkonic scans SMS messages for phishing keywords such as "bank", "OTP", 
+            "urgent", "winner", "lottery", and more.
+        </p>
+        <p>
+            If suspicious content is detected, the system flags the message as a 
+            potential SMISHING attack, helping users avoid scam links and fraud attempts.
+        </p>
+    </div>
+
+    <div class="feature-card">
+        <h2>🛡 Sender Verification System</h2>
+        <p>
+            The Sender Verification module checks whether an SMS sender ID matches 
+            known trusted banking and payment service identifiers such as SBI, HDFC, 
+            ICICI, Paytm, and others.
+        </p>
+        <p>
+            Unknown or suspicious senders are flagged to alert users before they 
+            trust or respond to the message.
+        </p>
+    </div>
+
+    <div class="feature-card">
+        <h2>⚡ Fast & Lightweight Processing</h2>
+        <p>
+            Apkonic is designed to deliver quick results with minimal processing time. 
+            The lightweight backend ensures fast scanning without heavy system resource usage.
+        </p>
+    </div>
+
+    <div class="feature-card">
+        <h2>📊 Clear & User-Friendly Results</h2>
+        <p>
+            Results are displayed in a clear and understandable format:
+            <br><br>
+            ✅ SAFE MESSAGE / SAFE APK  
+            <br>
+            ⚠ SMISHING MESSAGE / Suspicious APK  
+        </p>
+        <p>
+            This helps users quickly understand the risk level and take appropriate action.
+        </p>
+    </div>
+
+</div>
+
+<a href="/" class="back-btn">⬅ Back to Home</a>
+
+</body>
+</html>
