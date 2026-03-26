@@ -1,193 +1,514 @@
-/* ===== GLOBAL ===== */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #0a1931, #1f3c88);
-    color: white;
-}
-
-/* ===== NAVBAR ===== */
-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    z-index: 1000;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-nav a {
-    color: white;
-    margin-left: 20px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-nav a:hover {
-    color: #00c3ff;
-}
-
-/* ===== HERO (HOME PAGE) ===== */
+/* HERO SECTION (home page) */
 .hero {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    padding-top: 140px;
-    height: 100vh;
+    height: 90vh;
     text-align: center;
+    color: white;
 }
 
 .hero h1 {
-    font-size: 42px;
+    font-size: 40px;
     margin-bottom: 10px;
 }
 
 .hero p {
     font-size: 18px;
     margin-bottom: 20px;
-    max-width: 600px;
 }
 
 /* BUTTON */
 .hero button {
-    padding: 12px 25px;
-    background: #00c3ff;
-    color: black;
+    padding: 10px 20px;
+    background: white;
+    color: #1f3c88;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
 }
 
 .hero button:hover {
-    background: #00a6d6;
+    background: #ddd;
+}
+body{
+            margin:0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right,#0a1931,#1f3c88);
+            color:white;
+            padding:50px 20px;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:40px;
+        }
+
+        .container{
+            width: 100%;
+            max-width:1400px;
+            margin:auto;
+            display:flex;
+            flex-direction:column;
+            gap:30px;
+        }
+
+        .card{
+            background:white;
+            color:black;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .card h2{
+            color:#1f3c88;
+            margin-bottom:15px;
+        }
+
+        .card p{
+            line-height:1.6;
+            font-size:15px;
+        }
+
+        .back-btn{
+            display:block;
+            width:200px;
+            text-align:center;
+            margin:50px auto 0;
+            padding:12px;
+            background:#00c3ff;
+            color:black;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        .back-btn:hover{
+            background:#00aaff;
+        }
+        body{
+            font-family: Arial;
+            background: linear-gradient(to right,#0a1931,#1f3c88);
+            color:white;
+            text-align:center;
+            padding:50px;
+        }
+
+        .form-box{
+            background:white;
+            color:black;
+            max-width:500px;
+            margin:auto;
+            padding:30px;
+            border-radius:10px;
+        }
+
+        input, textarea{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+        }
+
+        button{
+            padding:10px 20px;
+            background:#1f3c88;
+            color:white;
+            border:none;
+        }
+        *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
 }
 
-/* ===== COMMON CONTAINER ===== */
-.container {
-    width: 90%;
-    max-width: 1100px;
-    margin: 120px auto;
-    text-align: center;
+body{
+  background:#f4f7fb;
 }
 
-/* ===== CARDS (SCAN + FEATURES) ===== */
-.cards {
-    display: flex;
-    gap: 25px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.card {
-    background: white;
-    color: black;
-    padding: 25px;
-    width: 300px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-/* INPUTS */
-.card input,
-.card textarea {
+/* Navbar */
+header {
+    position: fixed;   /* 🔥 navbar ko top pe fix karega */
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-/* BUTTONS */
-.card button {
-    width: 100%;
-    padding: 10px;
-    background: #1f3c88;
+    background: rgba(0, 0, 0, 0.8);
     color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    z-index: 1000;
+}
+.logo{
+  font-size:22px;
+  font-weight:bold;
 }
 
-.card button:hover {
-    background: #0a1931;
+nav a{
+  color:white;
+  text-decoration:none;
+  margin-left:20px;
+  font-size:16px;
 }
 
-/* ===== RESULT BOX ===== */
-.result {
-    margin-top: 15px;
-    padding: 15px;
-    border-radius: 10px;
-    font-weight: bold;
+nav a:hover{
+  color:#00c3ff;
 }
 
-.safe {
-    background: #d4edda;
-    color: green;
+/* Hero Section */
+.hero{
+  height:80vh;
+  background:linear-gradient(to right,#0a1931,#1f3c88);
+  color:white;
+  text-align:center;
+  padding-top:150px;
 }
 
-.danger {
-    background: #f8d7da;
-    color: red;
+.hero h1{
+  font-size:40px;
+  margin-bottom:20px;
 }
 
-/* ===== FEATURES PAGE ===== */
-.features {
-    margin-top: 120px;
+.hero p{
+  font-size:18px;
+  margin-bottom:30px;
+}
+
+.hero button{
+  padding:12px 25px;
+  border:none;
+  background:#00c3ff;
+  color:black;
+  font-size:16px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.hero button:hover{
+  background:#00aaff;
+}
+
+/* Scan Section */
+.scan{
+  padding:60px 50px;
+  text-align:center;
+}
+
+.scan h2{
+  margin-bottom:40px;
+}
+
+.scan-box{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap: wrap;
+}
+
+.card{
+  background:white;
+  padding:25px;
+  width:300px;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.card h3{
+  margin-bottom:15px;
+}
+
+.card input,
+.card textarea{
+  width:100%;
+  padding:10px;
+  margin-bottom:15px;
+  border-radius:5px;
+  border:1px solid #ccc;
+}
+
+.card button{
+  padding:10px 20px;
+  background:#1f3c88;
+  color:white;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.card button:hover{
+  background:#0a1931;
+}
+
+/* Features */
+.features{
+  background:#e3f2fd;
+  padding:60px 50px;
+  text-align:center;
+}
+
+.feature-box{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.feature{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  width:200px;
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+  font-size:16px;
+}
+
+/* ===== SCAN PAGE CLEAN UI ===== */
+
+.scan-container {
+    padding: 40px;
     text-align: center;
 }
-
-.features h2 {
+.scan-container h2 {
+    text-align: center;
+    font-size: 31px;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 1px;
+    margin-top: 0px;   /* ya -10px bhi try kar sakte ho */
     margin-bottom: 20px;
 }
 
-/* ===== ABOUT PAGE ===== */
-.about {
-    margin-top: 120px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
-/* ===== CONTACT PAGE ===== */
-.contact {
-    margin-top: 120px;
-    text-align: center;
+/* CARD */
+.card {
+    background: #ffffff;   /* white box */
+    color: #000000;        /* black text */
+    width: 300px;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-.contact input,
-.contact textarea {
-    width: 60%;
+/* TITLE */
+.card h2 {
+    margin-bottom: 15px;
+    color: #111;
+}
+
+/* TEXTAREA */
+.card textarea {
+    width: 100%;
+    height: 100px;
     padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: none;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    color: black;
 }
 
-.contact button {
-    padding: 10px 20px;
-    background: #00c3ff;
+/* INPUT */
+.card input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+/* BUTTON */
+.card button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
+    background: #1e3a8a;  /* dark blue */
+    color: white;
+    font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-.contact button:hover {
-    background: #009ac2;
+/* HOVER */
+.card button:hover {
+    background: #162d6b;
+}
+
+/* RESULT BOX */
+.result-box{
+    margin-top:15px;
+    padding:15px;
+    border-radius:10px;
+    text-align:left;
+    font-size:14px;
+}
+
+/* SAFE */
+.safe{
+    border:2px solid green;
+    color:green;
+}
+
+/* SUSPICIOUS */
+.suspicious{
+    border:2px solid orange;
+    color:orange;
+}
+
+/* DANGEROUS */
+.danger{
+    border:2px solid red;
+    color:red;
+}
+body{
+            margin:0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right,#0a1931,#1f3c88);
+            color:white;
+            padding:50px 20px;
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:50px;
+        }
+
+        .feature-container{
+            max-width:1100px;
+            margin:auto;
+            display:flex;
+            flex-direction:column;
+            gap:30px;
+        }
+
+        .feature-card{
+            background:white;
+            color:black;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 8px 20px rgba(0,0,0,0.3);
+            transition:0.3s;
+        }
+
+        .feature-card:hover{
+            transform:translateY(-5px);
+        }
+
+        .feature-card h2{
+            margin-bottom:15px;
+            color:#1f3c88;
+        }
+
+        .feature-card p{
+            line-height:1.6;
+            font-size:15px;
+        }
+
+        .back-btn{
+            display:block;
+            width:200px;
+            text-align:center;
+            margin:50px auto 0;
+            padding:12px;
+            background:#00c3ff;
+            color:black;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        .back-btn:hover{
+            background:#00aaff;
+        }
+        
+        /* ABOUT PAGE */
+
+        .about-container {
+           width: 100%;
+           max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.about-card {
+    background: rgba(255,255,255,0.95);
+    color: black;
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Title */
+
+.page-title {
+    text-align: center;
+    font-size: 32px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: white;
+}
+/* ABOUT PAGE PREMIUM */
+
+.about-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 30px;
+}
+
+/* GLASS CARD */
+.about-card {
+    width: 320px;
+    padding: 25px;
+    border-radius: 15px;
+
+    background: #ffffff;      /* white box */
+    color: #000000;           /* black text */
+
+    border: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+
+    text-align: center;
+    transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.about-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+
+/* TEXT */
+.about-card h2 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.about-card p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* TITLE */
+.page-title {
+    text-align: center;
+    font-size: 34px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: white;
 }
