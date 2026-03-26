@@ -2,7 +2,7 @@ from email.mime import message
 
 from flask import Flask, request, jsonify, render_template
 import os
-app = Flask(__name__)
+app = Flask(__name__,template_folder="templates")
 
 @app.route("/")
 def home():
