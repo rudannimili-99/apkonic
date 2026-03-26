@@ -21,10 +21,10 @@ def contact():
     if request.method == "POST":
         data = request.get_json()
 
-        name = data["name"]
-        email = data["email"]
-        subject = data["subject"]
-        message = data["message"]
+        name = request.form.get("name")
+        email = request.form.get("email")
+        subject = request.form.get("subject")
+        message = request.form.get("message")
         with open("messages.txt", "a") as f:
             f.write(f"\nName: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}\n---\n")
             print("New Message:")
