@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 90vh;
+    min-height: 70vh;
     text-align: center;
     color: white;
 }
@@ -21,7 +21,7 @@
 
 /* BUTTON */
 .hero button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     background: white;
     color: #1f3c88;
     border: none;
@@ -31,6 +31,23 @@
 
 .hero button:hover {
     background: #ddd;
+}
+
+@media (max-width: 768px) {
+
+    .hero {
+        min-height: 60vh;
+        padding: 20px;
+    }
+
+    .hero h1 {
+        font-size: 24px;   /* 40px bahut bada hai mobile ke liye */
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
 }
 body{
             margin:0;
