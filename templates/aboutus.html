@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Apkonic</title>
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v=2) }}">
+</head>
+<body>
 <h1>About Apkonic</h1>
 
-<div class="container">
+<div class="about-container">
 
-    <div class="card">
+    <div class="about-card">
         <h2>📌 Project Introduction</h2>
         <p>
             Apkonic is a web-based security system developed to detect fraudulent APK files 
@@ -19,7 +21,7 @@
         </p>
     </div>
 
-    <div class="card">
+    <div class="about-card">
         <h2>⚠ Problem Statement</h2>
         <p>
             With the rapid growth of digital banking and online services, cyber fraud 
@@ -30,7 +32,7 @@
         </p>
     </div>
 
-    <div class="card">
+    <div class="about-card">
         <h2>🎯 Our Mission</h2>
         <p>
             Our mission is to create a safer digital environment by providing a 
@@ -39,7 +41,7 @@
         </p>
     </div>
 
-    <div class="card">
+    <div class="about-card">
         <h2>🛠 Technologies Used</h2>
         <p>
             • Python (Flask Framework)<br>
@@ -50,7 +52,7 @@
         </p>
     </div>
 
-    <div class="card">
+    <div class="about-card">
         <h2>⚙ How It Works</h2>
         <p>
             1. User uploads an APK file or enters an SMS message.<br>
@@ -60,7 +62,7 @@
         </p>
     </div>
 
-    <div class="card">
+    <div class="about-card">
         <h2>🚀 Future Enhancements</h2>
         <p>
             • Integration with Machine Learning models for advanced detection<br>
@@ -73,6 +75,6 @@
 </div>
 
 <a href="/" class="back-btn">⬅ Back to Home</a>
-
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
