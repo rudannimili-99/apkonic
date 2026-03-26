@@ -1,24 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Apkonic</title>
+    <title>Contact Us - Apkonic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-<h1>Contact Us</h1>
+<h1 class="page-title">Contact Us</h1>
 
-<div class="form-box">
-    <input type="text" placeholder="Full Name">
-    <input type="email" placeholder="Email">
-    <input type="text" placeholder="Subject">
-    <textarea rows="4" placeholder="Message"></textarea>
-    <button onclick="alert('Message Sent Successfully!')">Send Message</button>
+<div class="about-container">
+
+    <div class="about-card">
+        <h2>📧 Email Support</h2>
+        <p>Reach us anytime at <b>support@apkonic.com</b> for help or queries.</p>
+    </div>
+
+    <div class="about-card">
+        <h2>📞 Phone</h2>
+        <p>Call us at <b>+91 98765 43210</b> (Mon–Fri, 9AM–6PM)</p>
+    </div>
+
+    <div class="about-card">
+        <h2>📍 Address</h2>
+        <p>Apkonic Security Labs, Ahmedabad, India</p>
+    </div>
+
+    <div class="about-card">
+        <h2>💬 Send Message</h2>
+
+        <form class="contact-form">
+
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+
+            <textarea placeholder="Your Message" rows="4" required></textarea>
+
+            <button type="submit">Send Message</button>
+
+        </form>
+
+    </div>
+
 </div>
-
-<a href="/" style="color:white;display:block;margin-top:20px;">⬅ Back to Home</a>
 
 </body>
 </html>
