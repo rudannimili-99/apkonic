@@ -1,3 +1,6 @@
+body{
+    background-color: red !important;
+}
 /* HERO SECTION (home page) */
 .hero {
     display: flex;
