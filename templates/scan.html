@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scan - Apkonic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="scan-container">
+
+    <h2>Scan APK or Smishing Message</h2>
+
+    <div class="cards">
+
+        <div class="card" id="verify-box">
+            <h3>Verify Sender</h3>
+<input type="text" id="senderInput" placeholder="Enter Sender ID">
+<button onclick="verifySender()">Verify Sender</button>
+<p id="senderResult"></p>
+        </div>
+        <div class="card">
+            <h3>Paste SMS</h3>
+<textarea id="sms" rows="4" placeholder="Paste message here"></textarea>
+<button onclick="scanSMS()">Scan Message</button>
+<p id="smsResult"></p>
+        </div>
+
+        <div class="card">
+            <h3>Upload APK File</h3>
+<input type="file" id="apkFile">
+<button onclick="scanAPK()">Scan APK</button>
+<div id="apkResult"></div>
+        </div>
+
+
+    </div>
+
+    <a href="/" class="back-btn">⬅ Back to Home</a>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
