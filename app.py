@@ -17,21 +17,23 @@ def features():
 @app.route("/aboutus")
 def aboutus():
     return render_template("aboutus.html")
-@app.route("/contact", methods=["GET","POST"])
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
         name = request.form.get("name")
         email = request.form.get("email")
         subject = request.form.get("subject")
         message = request.form.get("message")
+
         with open("messages.txt", "a") as f:
             f.write(f"\nName: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}\n---\n")
-            print("New Message:")
-            print(name, email, subject, message)
+
+        print("New Message:")
+        print(name, email, subject, message)
 
         return render_template("contact.html", message="Message received successfully!")
 
-        return render_template("contact.html")
+    return render_template("contact.html")
     
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
