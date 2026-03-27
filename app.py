@@ -45,20 +45,19 @@ def contact():
 
         msg.attach(MIMEText(body, "plain"))
 
-        try:
-            server = smtplib.SMTP("smtp.gmail.com", 587)
-            server.starttls()
-            server.login(sender_email, password)
-            server.send_message(msg)
-            server.quit()
+    try:
+       server = smtplib.SMTP("smtp.gmail.com", 587)
+       server.starttls()
+       server.login(sender_email, password)
+       server.send_message(msg)
+       server.quit()
 
-            return render_template("contact.html", success=True)
+       print("Email sent successfully!")
 
-        print("Email sent successfully!")
-        except Exception as e:
-            print("Error:",str(e))
-            return f"error:{str(e)}"
-    return render_template("contact.html")
+    except Exception as e:
+      print("Error:", str(e))
+      return f"error: {str(e)}"
+     return render_template("contact.html")
     
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
