@@ -57,7 +57,7 @@ def contact():
     except Exception as e:
       print("Error:", str(e))
       return f"error: {str(e)}"
-     return render_template("contact.html")
+    return render_template("contact.html")
     
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
