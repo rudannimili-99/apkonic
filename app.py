@@ -1,4 +1,6 @@
-from email.mime import message
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from flask import Flask, request, jsonify, render_template
 import os
@@ -25,16 +27,37 @@ def contact():
         subject = request.form.get("subject")
         message = request.form.get("message")
 
-        with open("messages.txt", "a") as f:
-            f.write(f"\nName: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}\n---\n")
+        sender_email = "apkonic.support@gmail.com"   # <-- apna gmail
+        receiver_email = "apkonic.support@gmail.com" # <-- same ya alag
+        password = "YOUR_APP_PASSWORD"               # <-- jo mila hai
 
-        print("New Message:")
-        print(name, email, subject, message)
+        msg = MIMEMultipart()
+        msg["From"] = sender_email
+        msg["To"] = receiver_email
+        msg["Subject"] = subject if subject else "New Message"
 
-        return render_template("contact.html", message="Message received successfully!")
+        body = f"""
+        Name: {name}
+        Email: {email}
+        Subject: {subject}
+        Message: {message}
+        """
+
+        msg.attach(MIMEText(body, "plain"))
+
+        try:
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls()
+            server.login(sender_email, password)
+            server.send_message(msg)
+            server.quit()
+
+            return render_template("contact.html", success=True)
+
+        except Exception as e:
+            return f"Error: {str(e)}"
 
     return render_template("contact.html")
-    
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
