@@ -33,15 +33,17 @@
 
         <form class="contact-form" method="POST" action="/contact">
 
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Email" required>
+    <input type="text" name="name" placeholder="Your Name" required>
 
-            <textarea placeholder="Your Message" rows="4" required></textarea>
+    <input type="email" name="email" placeholder="Your Email" required>
 
-            <button type="submit">Send Message</button>
+    <input type="text" name="subject" placeholder="Subject">
 
-        </form>
+    <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
 
+    <button type="submit">Send Message</button>
+
+</form>
     </div>
 
 </div>
