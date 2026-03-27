@@ -94,7 +94,7 @@ function scanAPK(){
             box-shadow:0 0 15px rgba(0,0,0,0.1);
             margin-top:20px;
         ">
-        resultDiv.innerHTML = 
+     
         <div class="result-box ${data.result.includes('Safe') ? 'safe' : data.result.includes('Suspicious') ? 'suspicious' : 'danger'}">
 
         <h2>
