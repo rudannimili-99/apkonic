@@ -1,8 +1,14 @@
 from flask import Flask, request, jsonify, render_template
 import os
 import re
+from pymongo import MongoClient
+from datetime import datetime
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
+# MongoDB Atlas connection
+client = MongoClient("mongodb+srv://rudanimili1118_db_user:MiliRudani1234@cluster0.vweh5lh.mongodb.net/?appName=Cluster0&authSource=admin&replicaSet=atlas-13l7j8-shard-0&w=majority")
+db = client["apkonic"]
+collection = db["logs"]
 
 # Upload folder
 UPLOAD_FOLDER = "uploads"
@@ -36,28 +42,29 @@ def aboutus():
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
-        print("FORM RECEIVED")
+        print("FORM RECEIVED:", request.form)
+
         name = request.form.get("name")
         email = request.form.get("email")
         subject = request.form.get("subject")
         message = request.form.get("message")
 
-        with open("messages.txt", "w", encoding="utf-8") as f:
-          f.write("----- NEW MESSAGE -----\n")
-          f.write(f"Name: {name}\n")
-          f.write(f"Email: {email}\n")
-          f.write(f"Subject: {subject}\n")
-          f.write(f"Message: {message}\n")
-          f.write("------------------------\n\n")
+        try:
+            
+            with open("message.txt", "a", encoding="utf-8") as f:
+              f.write("----- NEW MESSAGE -----\n")
+              f.write(f"Name: {name}\n")
+              f.write(f"Email: {email}\n")
+              f.write(f"Subject: {subject}\n")
+              f.write(f"Message: {message}\n")
+              f.write("------------------------\n\n")
+            print("Saved message ✔")
+        except Exception as e:
+            print("Error:", e)
 
-        print("Saved message")
-    except Exception as e:
-        print("Error:", e)
+        return render_template("contact.html", message="Message received successfully!")
 
-    return render_template("contact.html", message="Message received successfully!")
-
-return render_template("contact.html")
-
+    return render_template("contact.html")
 
 # ================= SMS SCAN =================
 @app.route("/scan_sms", methods=["POST"])
@@ -95,6 +102,29 @@ def scan_sms():
     else:
         result = "Phishing / Dangerous Message"
         color = "red"
+        with open("activity_logs.txt", "a", encoding="utf-8") as f:
+          f.write(
+            f"""
+        Time   : {datetime.now()}
+        Message: {message}
+        Risk   : {risk_score}
+        Result : {result}
+
+
+      """
+    )
+    try:
+      collection.insert_one({
+        "type": "sms",
+        "message": message,
+        "risk_score": risk_score,
+        "reasons": reasons,
+        "timestamp": datetime.utcnow()
+        })
+      print("MongoDB saved ✔")
+    except Exception as e:
+      print("MongoDB error:", e)
+
 
     return jsonify({
         "result": result,
@@ -125,7 +155,17 @@ def verify_sender():
         verdict = "Trusted / Likely Legitimate Sender"
     else:
         verdict = "Unknown or Suspicious Sender"
+    with open("activity_logs.txt", "a", encoding="utf-8") as f:
+     f.write(
+        f"""
 
+    Time   : {datetime.now()}
+    Sender : {sender}
+    Verdict: {verdict}
+
+
+"""
+    )
     return jsonify({"verdict": verdict})
 
 
@@ -155,7 +195,17 @@ def scan_apk():
     else:
         result = "APK Might Be Suspicious"
         color = "orange"
+    with open("activity_logs.txt", "a", encoding="utf-8") as f:
+     f.write(
+        f"""
+======== APK UPLOAD ========
+    Time : {datetime.now()}
+    File : {file.filename}
+    Size : {filesize} bytes
+============================
 
+"""
+    )
     return jsonify({
         "result": result,
         "size": filesize,
