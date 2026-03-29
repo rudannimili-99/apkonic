@@ -42,7 +42,7 @@ def contact():
         subject = request.form.get("subject")
         message = request.form.get("message")
 
-        with open("messages.txt", "a", encoding="utf-8") as f:
+        with open("messages.txt", "w", encoding="utf-8") as f:
             f.write(f"\nName: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}\n")
 
         print("Saved message to messages.txt")
