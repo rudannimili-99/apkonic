@@ -8,8 +8,8 @@ from datetime import datetime
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 # MongoDB Atlas connection
-client = MongoClient("mongodb+srv://rudanimili1118_db_user:MiliRudani1234@cluster0.vweh5lh.mongodb.net/?appName=Cluster0&authSource=admin&replicaSet=atlas-13l7j8-shard-0&w=majorityserverSelectionTimeoutMS=5000")
-db = client["apkonic"]
+client = MongoClient("mongodb+srv://rudanimili1118_db_user:MiliRudani1234@cluster0.vweh5lh.mongodb.net/?retryWrites=true&w=majority&serverSelectionTimeoutMS=5000")
+db = client["apkonic_db"]
 collection = db["logs"]
 try:
     client.admin.command('ping')
