@@ -6,9 +6,15 @@ from datetime import datetime
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 # MongoDB Atlas connection
-client = MongoClient("mongodb+srv://rudanimili1118_db_user:MiliRudani1234@cluster0.vweh5lh.mongodb.net/?appName=Cluster0&authSource=admin&replicaSet=atlas-13l7j8-shard-0&w=majority")
+client = MongoClient("mongodb+srv://rudanimili1118_db_user:MiliRudani1234@cluster0.vweh5lh.mongodb.net/?appName=Cluster0&authSource=admin&replicaSet=atlas-13l7j8-shard-0&w=majorityserverSelectionTimeoutMS=5000")
 db = client["apkonic"]
 collection = db["logs"]
+try:
+    client.admin.command('ping')
+    print("Connected to MongoDB Atlas successfully!")
+except Exception as e:
+    print("Error connecting to MongoDB Atlas:", e)
+
 
 # Upload folder
 UPLOAD_FOLDER = "uploads"
