@@ -36,6 +36,7 @@ def aboutus():
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
+        print("FORM RECEIVED")
         name = request.form.get("name")
         email = request.form.get("email")
         subject = request.form.get("subject")
