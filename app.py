@@ -261,7 +261,10 @@ Result : {result}
     except Exception as e:
         print("Scan error:", e)
         return jsonify({"result": "Error scanning APK"})
-
+@app.route("/get_logs")
+def get_logs():
+    data = list(collection.find({}, {"_id": 0}))
+    return jsonify(data)
 
 # ================= RUN =================
 if __name__ == "__main__":
