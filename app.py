@@ -102,17 +102,21 @@ def scan_sms():
     else:
         result = "Phishing / Dangerous Message"
         color = "red"
-        with open("activity_logs.txt", "a", encoding="utf-8") as f:
-          f.write(
-            f"""
+    try:
+      with open("activity_logs.txt", "a", encoding="utf-8") as f:
+          f.write(f"""
+ ----------------SMS SCAN----------------       
         Time   : {datetime.now()}
         Message: {message}
         Risk   : {risk_score}
         Result : {result}
+-------------------
 
-
-      """
-    )
+      """)
+          print("file saved")
+    except Exception as e:
+          print("Error saving file:", e)
+    
     try:
       collection.insert_one({
         "type": "sms",
@@ -155,62 +159,88 @@ def verify_sender():
         verdict = "Trusted / Likely Legitimate Sender"
     else:
         verdict = "Unknown or Suspicious Sender"
-    with open("activity_logs.txt", "a", encoding="utf-8") as f:
-     f.write(
-        f"""
-
+    try:
+      with open("activity_logs.txt", "a", encoding="utf-8") as f:
+        f.write(f"""
+    
+-------------------SENDER VERIFY----------------
     Time   : {datetime.now()}
     Sender : {sender}
     Verdict: {verdict}
+=================================
 
-
-"""
-    )
+""")
+        print("file saved")
+    except Exception as e:
+        print("Error saving file:", e)
     return jsonify({"verdict": verdict})
 
 
 # ================= APK SCAN =================
 @app.route("/scan_apk", methods=["POST"])
 def scan_apk():
-    if "apk" not in request.files:
-        return jsonify({"result": "No file uploaded"})
+    try:
+        # Get file
+        if "apk" not in request.files:
+            return jsonify({"result": "No file uploaded"})
 
-    file = request.files["apk"]
+        file = request.files["apk"]
 
-    if file.filename == "":
-        return jsonify({"result": "No file selected"})
+        # Save file
+        filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+        file.save(filepath)
 
-    if not file.filename.lower().endswith(".apk"):
-        return jsonify({"result": "Not a valid APK file"})
+        # Get size
+        filesize = os.path.getsize(filepath)
 
-    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(filepath)
+        # Simple logic
+        if filesize < 5 * 1024 * 1024:
+            result = "APK Looks Safe"
+            color = "green"
+        else:
+            result = "APK Might Be Suspicious"
+            color = "orange"
 
-    filesize = os.path.getsize(filepath)
-
-    # Simple logic
-    if filesize < 5 * 1024 * 1024:
-        result = "APK Looks Safe"
-        color = "green"
-    else:
-        result = "APK Might Be Suspicious"
-        color = "orange"
-    with open("activity_logs.txt", "a", encoding="utf-8") as f:
-     f.write(
-        f"""
+        # Save to text file
+        try:
+            with open("activity_logs.txt", "a", encoding="utf-8") as f:
+                f.write(f"""
 ======== APK UPLOAD ========
-    Time : {datetime.now()}
-    File : {file.filename}
-    Size : {filesize} bytes
+Time   : {datetime.now()}
+File   : {file.filename}
+Size   : {filesize} bytes
+Result : {result}
 ============================
+""")
+            print("APK log saved")
 
-"""
-    )
-    return jsonify({
-        "result": result,
-        "size": filesize,
-        "color": color
-    })
+        except Exception as e:
+            print("APK log error:", e)
+
+        # Save to MongoDB
+        try:
+            collection.insert_one({
+                "type": "apk",
+                "filename": file.filename,
+                "size": filesize,
+                "result": result,
+                "timestamp": datetime.utcnow()
+            })
+            print("MongoDB saved ✓")
+
+        except Exception as e:
+            print("MongoDB error:", e)
+
+        # Response
+        return jsonify({
+            "result": result,
+            "size": filesize,
+            "color": color
+        })
+
+    except Exception as e:
+        print("Scan error:", e)
+        return jsonify({"result": "Error scanning APK"})
 
 
 # ================= RUN =================
