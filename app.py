@@ -43,13 +43,20 @@ def contact():
         message = request.form.get("message")
 
         with open("messages.txt", "w", encoding="utf-8") as f:
-            f.write(f"\nName: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}\n")
+          f.write("----- NEW MESSAGE -----\n")
+          f.write(f"Name: {name}\n")
+          f.write(f"Email: {email}\n")
+          f.write(f"Subject: {subject}\n")
+          f.write(f"Message: {message}\n")
+          f.write("------------------------\n\n")
 
-        print("Saved message to messages.txt")
+        print("Saved message")
+    except Exception as e:
+        print("Error:", e)
 
-        return render_template("contact.html", message="Message received successfully!")
+    return render_template("contact.html", message="Message received successfully!")
 
-    return render_template("contact.html")
+return render_template("contact.html")
 
 
 # ================= SMS SCAN =================
