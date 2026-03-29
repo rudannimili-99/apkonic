@@ -10,7 +10,7 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 # MongoDB Atlas connection
 client = MongoClient("mongodb+srv://rudanimili1118_db_user:MiliRudani1234@cluster0.vweh5lh.mongodb.net/?retryWrites=true&w=majority&serverSelectionTimeoutMS=5000")
 db = client["apkonic"]
-collection = db["users"]
+collection = db["logs"]
 try:
     client.admin.command('ping')
     print("Connected to MongoDB Atlas successfully!")
