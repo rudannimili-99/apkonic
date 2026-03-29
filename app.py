@@ -1,11 +1,12 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+from email.mime import message
 
 from flask import Flask, request, jsonify, render_template
 import os
 print(os.listdir("templates"))
 app = Flask(__name__,template_folder="templates",static_folder="static",static_url_path="/static")
+
+UPLOAD_FOLDER = "uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route("/")
 def home():
@@ -19,48 +20,18 @@ def features():
 @app.route("/aboutus")
 def aboutus():
     return render_template("aboutus.html")
-@app.route("/contact", methods=["GET", "POST"])
+@app.route("/contact", methods=["POST"])
 def contact():
-    if request.method == "POST":
         name = request.form.get("name")
         email = request.form.get("email")
         subject = request.form.get("subject")
         message = request.form.get("message")
 
-        sender_email = "apkonic.support@gmail.com"   # <-- apna gmail
-        receiver_email = "apkonic.support@gmail.com" # <-- same ya alag
-        password = "pown itol beod wibr"               # <-- jo mila hai
+        with open("messages.txt", "a", encoding="utf-8") as f:
+            f.write(f"\nName: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}\n---\n")
 
-        msg = MIMEMultipart()
-        msg["From"] = sender_email
-        msg["To"] = receiver_email
-        msg["Subject"] = subject if subject else "New Message"
 
-        body = f"""
-        Name: {name}
-        Email: {email}
-        Subject: {subject}
-        Message: {message}
-        """
-
-        msg.attach(MIMEText(body, "plain"))
-
-    try:
-       server = smtplib.SMTP("smtp.gmail.com", 587)
-       server.starttls()
-       server.login(sender_email, password)
-       server.send_message(msg)
-       server.quit()
-
-       print("Email sent successfully!")
-
-    except Exception as e:
-      print("Error:", str(e))
-      return f"error: {str(e)}"
-    return render_template("contact.html")
-    
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        return render_template("contact.html", message="Message received successfully!")
 
 # ================= SMS SCAN =================
 import re
