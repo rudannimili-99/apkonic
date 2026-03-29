@@ -161,34 +161,39 @@ def verify_sender():
         "AMAZON", "FLIPKART", "ZOMATO", "SWIGGY",
         "UIDAI", "IRCTC", "AIRINDIA", "GOOGLE", "APPLE"
     ]
-
     if any(trusted in sender for trusted in trusted_senders):
         verdict = "Trusted / Likely Legitimate Sender"
     else:
         verdict = "Unknown or Suspicious Sender"
-    try:
-      with open("activity_logs.txt", "a", encoding="utf-8") as f:
-        f.write(f"""
-    
--------------------SENDER VERIFY----------------
-Time   : {datetime.now()}
-Sender : {sender}
-Verdict: {verdict}
-=================================
 
+    # ✅ FILE SAVE
+    try:
+        with open("activity_logs.txt", "a", encoding="utf-8") as f:
+            f.write(f"""
+------------------SENDER VERIFY------------------
+Time    : {datetime.now()}
+Sender  : {sender}
+Verdict : {verdict}
+================================================
 """)
         print("file saved")
-    try:
-      result=collection.insert_one({
-        "type": "sender",
-        "message": sender,
-        "verdict": verdict,
-        "timestamp": datetime.utcnow()
-        })
-      print("MongoDB saved ✔",result.inserted_id)
     except Exception as e:
-      print("MongoDB error:", e)
+        print("Error saving file:", e)
+
+    # ✅ MONGODB SAVE
+    try:
+        result = collection.insert_one({
+            "type": "sender",
+            "sender": sender,
+            "verdict": verdict,
+            "timestamp": datetime.utcnow()
+        })
+        print("MongoDB saved ✓", result.inserted_id)
+    except Exception as e:
+        print("MongoDB error ❌:", e)
+
     return jsonify({"verdict": verdict})
+     
 
 
 # ================= APK SCAN =================
