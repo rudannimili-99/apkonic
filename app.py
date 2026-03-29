@@ -22,6 +22,9 @@ def aboutus():
     return render_template("aboutus.html")
 @app.route("/contact", methods=["GET","POST"])
 def contact():
+        @app.route("/contact", methods=["POST"])
+def contact():
+       if request.method == "POST": 
         name = request.form.get("name")
         email = request.form.get("email")
         subject = request.form.get("subject")
@@ -29,14 +32,14 @@ def contact():
 
         with open("messages.txt", "a", encoding="utf-8") as f:
             f.write(f"\nName: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}\n---\n")
-
+        print("saved message to messages.txt")
 
         return render_template("contact.html", message="Message received successfully!")
-
+       return render_template("contact.html")
 # ================= SMS SCAN =================
 import re
 
-@app.route('/scan_sms', methods=['POST'])
+@app.route('/scan_sms', methods=["GET","POST"])
 def scan_sms():
     data = request.get_json()
     message = data.get('message', '').lower()
