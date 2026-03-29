@@ -1,3 +1,5 @@
+from http import client
+
 from flask import Flask, request, jsonify, render_template
 import os
 import re
@@ -14,7 +16,6 @@ try:
     print("Connected to MongoDB Atlas successfully!")
 except Exception as e:
     print("Error connecting to MongoDB Atlas:", e)
-
 
 # Upload folder
 UPLOAD_FOLDER = "uploads"
@@ -112,10 +113,10 @@ def scan_sms():
       with open("activity_logs.txt", "a", encoding="utf-8") as f:
           f.write(f"""
  ----------------SMS SCAN----------------       
-        Time   : {datetime.now()}
-        Message: {message}
-        Risk   : {risk_score}
-        Result : {result}
+Time   : {datetime.now()}
+Message: {message}
+Risk   : {risk_score}
+Result : {result}
 -------------------
 
       """)
@@ -131,7 +132,7 @@ def scan_sms():
         "reasons": reasons,
         "timestamp": datetime.utcnow()
         })
-      print("MongoDB saved ✔")
+      print("MongoDB saved ✔",result.inserted_id)
     except Exception as e:
       print("MongoDB error:", e)
 
@@ -170,15 +171,23 @@ def verify_sender():
         f.write(f"""
     
 -------------------SENDER VERIFY----------------
-    Time   : {datetime.now()}
-    Sender : {sender}
-    Verdict: {verdict}
+Time   : {datetime.now()}
+Sender : {sender}
+Verdict: {verdict}
 =================================
 
 """)
         print("file saved")
+    try:
+      result=collection.insert_one({
+        "type": "sender",
+        "message": sender,
+        "verdict": verdict,
+        "timestamp": datetime.utcnow()
+        })
+      print("MongoDB saved ✔",result.inserted_id)
     except Exception as e:
-        print("Error saving file:", e)
+      print("MongoDB error:", e)
     return jsonify({"verdict": verdict})
 
 
