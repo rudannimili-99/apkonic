@@ -20,7 +20,7 @@ def features():
 @app.route("/aboutus")
 def aboutus():
     return render_template("aboutus.html")
-@app.route("/contact", methods=["POST"])
+@app.route("/contact", methods=["GET","POST"])
 def contact():
         name = request.form.get("name")
         email = request.form.get("email")
