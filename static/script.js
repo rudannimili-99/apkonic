@@ -129,11 +129,20 @@ function verifySender(){
         body:JSON.stringify({ sender: sender })
     })
     .then(res=>res.json())
-    .then(data=>{
-        document.getElementById("senderResult").innerText = data.verdict;
-    })
-    .catch(err=>{
-        console.log(err);
-        alert("Verify error");
-    });
+    .then(data => {
+    let resultText = document.getElementById("senderResult");
+    resultText.innerHTML = "✔️ TEST WORKING";
+
+    if (data.verdict.includes("Trusted")) {
+        resultText.innerHTML = "✔️ " + data.verdict;
+        resultText.style.color = "green";
+    } else {
+        resultText.innerHTML = "❌ " + data.verdict;
+        resultText.style.color = "red";
+    }
+})
+.catch(err => {
+    console.log(err);
+    alert("Verify error");
+});
 }
