@@ -159,44 +159,77 @@ def verify_sender():
     if not data or "sender" not in data:
         return jsonify({"verdict": "No sender received"})
 
-    sender = data["sender"].upper()
+    # ✅ Clean sender input
+    sender = data.get("sender", "").strip().upper()
 
+    # ✅ Valid Prefixes
+    valid_prefixes = [
+        "VM-", "VK-", "VD-", "VA-", "VG-",   # Vodafone
+        "AX-", "AD-", "AL-", "AP-", "AT-",   # Airtel
+        "JM-", "JD-", "JX-", "JO-",          # Jio
+        "BP-", "BR-", "BS-", "BH-",          # BSNL
+        "TZ-", "TM-", "TN-"                  # Others
+    ]
+
+    # ✅ Trusted sender names
     trusted_senders = [
         "SBIUPI", "AXISBK", "HDFCBK", "ICICIB",
         "JIOPAY", "PAYTMB", "GPAY", "KOTAKBK",
         "AMAZON", "FLIPKART", "ZOMATO", "SWIGGY",
         "UIDAI", "IRCTC", "AIRINDIA", "GOOGLE", "APPLE"
     ]
-    if any(trusted in sender for trusted in trusted_senders):
+
+    # ✅ Split sender format (AX-HDFCBK-S)
+    parts = sender.split("-")
+
+    prefix = parts[0] + "-" if len(parts) > 0 else ""
+    name = parts[1] if len(parts) > 1 else ""
+
+    # ✅ Matching logic
+    prefix_match = prefix in valid_prefixes
+    name_match = any(trusted in name for trusted in trusted_senders)
+
+    print("Sender:", sender)
+    print("Prefix:", prefix)
+    print("Name:", name)
+    print("Prefix Match:", prefix_match)
+    print("Name Match:", name_match)
+
+    # ✅ Final verdict
+    if prefix_match and name_match:
         verdict = "Trusted / Likely Legitimate Sender"
     else:
         verdict = "Unknown or Suspicious Sender"
 
-    # ✅ FILE SAVE
+    # ================= FILE SAVE =================
     try:
         with open("activity_logs.txt", "a", encoding="utf-8") as f:
             f.write(f"""
-------------------SENDER VERIFY------------------
-Time    : {datetime.now()}
-Sender  : {sender}
-Verdict : {verdict}
-================================================
-""")
-        print("file saved")
-    except Exception as e:
-        print("Error saving file:", e)
+------------------ SENDER VERIFY ------------------
+Sender   : {sender}
+Prefix   : {prefix}
+Name     : {name}
+Verdict  : {verdict}
+--------------------------------------------------
 
-    # ✅ MONGODB SAVE
+""")
+        print("File saved ✔")
+    except Exception as e:
+        print("File save error:", e)
+
+    # ================= MONGODB SAVE =================
     try:
-        result = collection.insert_one({
+        collection.insert_one({
             "type": "sender",
             "sender": sender,
+            "prefix": prefix,
+            "name": name,
             "verdict": verdict,
             "timestamp": datetime.now(timezone.utc)
         })
-        print("MongoDB saved ✓", result.inserted_id)
+        print("MongoDB saved ✔")
     except Exception as e:
-        print("MongoDB error ❌:", e)
+        print("MongoDB error:", e)
 
     return jsonify({"verdict": verdict})
      
