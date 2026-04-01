@@ -4,17 +4,23 @@ from flask import Flask, request, jsonify, render_template
 import os
 import re
 from pymongo import MongoClient
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+
+def get_ist_time():
+    utc_now = datetime.now(timezone.utc)
+    ist = utc_now.astimezone(timezone(timedelta(hours=5, minutes=30)))
+    return ist.strftime("%d %B %Y, %I:%M %p")
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 # MongoDB Atlas connection
 client = MongoClient("mongodb+srv://rudanimili1118_db_user:MiliRudani1234@cluster0.vweh5lh.mongodb.net/?retryWrites=true&w=majority&serverSelectionTimeoutMS=5000")
 db = client["apkonic"]
 collection = db["logs"]
+print("INSERT RUNNING")
 collection.insert_one({
     "type": "connection_test",
     "msg":"manual insert",
-    "timestamp": datetime.now(timezone.utc)
+    "timestamp": get_ist_time()
 })
 try:
     client.admin.command('ping')
@@ -119,7 +125,7 @@ def scan_sms():
       with open("activity_logs.txt", "a", encoding="utf-8") as f:
           f.write(f"""
  ----------------SMS SCAN----------------       
-Time   : {datetime.now()}
+Time   : {get_ist_time()}
 Message: {message}
 Risk   : {risk_score}
 Result : {result}
@@ -136,7 +142,7 @@ Result : {result}
         "message": message,
         "risk_score": risk_score,
         "reasons": reasons,
-        "timestamp": datetime.now(timezone.utc)
+        "timestamp": get_ist_time()
         })
       print("MongoDB saved ✔",result.inserted_id)
     except Exception as e:
@@ -232,9 +238,6 @@ Verdict  : {verdict}
         print("MongoDB error:", e)
 
     return jsonify({"verdict": verdict})
-     
-
-
 # ================= APK SCAN =================
 @app.route("/scan_apk", methods=["POST"])
 def scan_apk():
@@ -265,7 +268,7 @@ def scan_apk():
             with open("activity_logs.txt", "a", encoding="utf-8") as f:
                 f.write(f"""
 ======== APK UPLOAD ========
-Time   : {datetime.now()}
+Time   : {get_ist_time()}
 File   : {file.filename}
 Size   : {filesize} bytes
 Result : {result}
@@ -283,7 +286,7 @@ Result : {result}
                 "filename": file.filename,
                 "size": filesize,
                 "result": result,
-                "timestamp": datetime.now(timezone.utc)
+                "timestamp": get_ist_time()
             })
             print("MongoDB saved ✓")
 
