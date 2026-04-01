@@ -6,22 +6,21 @@ import re
 from pymongo import MongoClient
 from datetime import datetime, timezone, timedelta
 
+app = Flask(__name__, template_folder="templates", static_folder="static")
+
+# ==========================
+# ⏰ IST TIME FUNCTION
+# ==========================
 def get_ist_time():
     utc_now = datetime.now(timezone.utc)
     ist = utc_now.astimezone(timezone(timedelta(hours=5, minutes=30)))
     return ist.strftime("%d %B %Y, %I:%M %p")
-
-app = Flask(__name__, template_folder="templates", static_folder="static")
 # MongoDB Atlas connection
 client = MongoClient("mongodb+srv://rudanimili1118_db_user:MiliRudani1234@cluster0.vweh5lh.mongodb.net/?retryWrites=true&w=majority&serverSelectionTimeoutMS=5000")
 db = client["apkonic"]
 collection = db["logs"]
 print("INSERT RUNNING")
-collection.insert_one({
-    "type": "connection_test",
-    "msg":"manual insert",
-    "timestamp": get_ist_time()
-})
+
 try:
     client.admin.command('ping')
     print("Connected to MongoDB Atlas successfully!")
@@ -231,7 +230,7 @@ Verdict  : {verdict}
             "prefix": prefix,
             "name": name,
             "verdict": verdict,
-            "timestamp": datetime.now(timezone.utc)
+            "timestamp": {get_ist_time()}
         })
         print("MongoDB saved ✔")
     except Exception as e:
