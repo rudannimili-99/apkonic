@@ -4,13 +4,18 @@ from flask import Flask, request, jsonify, render_template
 import os
 import re
 from pymongo import MongoClient
-from datetime import datetime
+from datetime import datetime, timezone
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 # MongoDB Atlas connection
 client = MongoClient("mongodb+srv://rudanimili1118_db_user:MiliRudani1234@cluster0.vweh5lh.mongodb.net/?retryWrites=true&w=majority&serverSelectionTimeoutMS=5000")
 db = client["apkonic"]
 collection = db["logs"]
+collection.insert_one({
+    "type": "connection_test",
+    "msg":"manual insert",
+    "timestamp": datetime.now(timezone.utc)
+})
 try:
     client.admin.command('ping')
     print("Connected to MongoDB Atlas successfully!")
@@ -86,7 +91,8 @@ def scan_sms():
     keywords = ["win", "lottery", "free", "urgent", "click", "offer", "prize"]
     if any(k in message for k in keywords):
         risk_score += 2
-        reasons.append("Suspicious keywords detected")
+
+    reasons.append("Suspicious keywords detected")
 
     # 2. External links
     if re.search(r"http[s]?://", message):
@@ -130,7 +136,7 @@ Result : {result}
         "message": message,
         "risk_score": risk_score,
         "reasons": reasons,
-        "timestamp": datetime.utcnow()
+        "timestamp": datetime.now(timezone.utc)
         })
       print("MongoDB saved ✔",result.inserted_id)
     except Exception as e:
@@ -186,7 +192,7 @@ Verdict : {verdict}
             "type": "sender",
             "sender": sender,
             "verdict": verdict,
-            "timestamp": datetime.utcnow()
+            "timestamp": datetime.now(timezone.utc)
         })
         print("MongoDB saved ✓", result.inserted_id)
     except Exception as e:
@@ -244,7 +250,7 @@ Result : {result}
                 "filename": file.filename,
                 "size": filesize,
                 "result": result,
-                "timestamp": datetime.utcnow()
+                "timestamp": datetime.now(timezone.utc)
             })
             print("MongoDB saved ✓")
 
