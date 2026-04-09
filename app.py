@@ -224,13 +224,14 @@ Verdict  : {verdict}
 
     # ================= MONGODB SAVE =================
     try:
+        print("Data going to db",sender,verdict)
         collection.insert_one({
             "type": "sender",
             "sender": sender,
             "prefix": prefix,
             "name": name,
             "verdict": verdict,
-            "timestamp": {get_ist_time()}
+            "timestamp": get_ist_time()
         })
         print("MongoDB saved ✔")
     except Exception as e:
