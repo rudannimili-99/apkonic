@@ -93,7 +93,7 @@ def scan_sms():
     reasons = []
 
     # 1. Suspicious keywords
-    keywords = ["win", "lottery", "free", "urgent", "click", "offer", "prize"]
+    keywords = ["win", "lottery", "free", "urgent", "click", "offer", "prize","fraud"]
     if any(k in message for k in keywords):
         risk_score += 2
 
